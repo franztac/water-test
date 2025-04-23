@@ -7,7 +7,8 @@ water potability description using ML
 References
 -------------
 github "teacher" repo: 
-https://github.com/DataThinkers/water-potability-Prediction_Code-and-Data-Versioning
+<!-- https://github.com/DataThinkers/water-potability-Prediction_Code-and-Data-Versioning -->
+https://github.com/DataThinkers/water-test
 
 
 Cookiecutter v1 steps

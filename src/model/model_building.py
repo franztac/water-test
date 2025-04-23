@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 import yaml
 import logging
 
+
 logging.basicConfig(
     level=logging.INFO, format="[%(levelname)s - %(filename)s] %(message)s"
 )
@@ -21,11 +22,6 @@ def load_params(params_path: str) -> int:
         raise
 
 
-# with open("params.yaml", "r") as f:
-#     params = yaml.safe_load(f)
-# n_estimators = params["model_building"]["n_estimators"]
-
-
 def load_data(filepath: str) -> pd.DataFrame:
     try:
         logging.info(f"loading data from {filepath}")
@@ -33,12 +29,6 @@ def load_data(filepath: str) -> pd.DataFrame:
     except Exception as e:
         logging.error(f"error loading data from {filepath}: {e}")
         raise
-
-
-# train_data = pd.read_csv("./data/processed/train_processed.csv ")
-
-# X_train = train_data.iloc[:, :-1].values
-# y_train = train_data.iloc[:, -1].values
 
 
 def prepare_data(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
@@ -50,10 +40,6 @@ def prepare_data(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     except Exception as e:
         logging.error(f"error preparing data: {e}")
         raise
-
-
-# X_train = train_data.drop(columns=["Potability"])
-# y_train = train_data.Potability
 
 
 def train_model(
@@ -69,35 +55,29 @@ def train_model(
         raise
 
 
-def save_model(model: RandomForestClassifier, filepath: str) -> None:
+def save_model(model: RandomForestClassifier, model_name: str) -> None:
     try:
-        with open(filepath, "wb") as file:
-            logging.info(f"saving model to {filepath}")
+        with open(model_name, "wb") as file:
+            logging.info(f"saving model to {model_name}")
             pickle.dump(model, file)
     except Exception as e:
-        logging.error(f"error saving model to {filepath}: {e}")
+        logging.error(f"error saving model to {model_name}: {e}")
         raise
-
-
-# with open("model.pkl", "wb") as f:
-#     pickle.dump(clf, f)
 
 
 def main():
     try:
         params_path = "params.yaml"
         data_path = "./data/processed/train_processed.csv"
-        model_name = "model.pkl"
+        model_name = "models/model.pkl"
 
         n_estimators = load_params(params_path)
         train_data = load_data(data_path)
         X_train, y_train = prepare_data(train_data)
 
-        # clf = RandomForestClassifier(n_estimators=n_estimators)
-        # clf.fit(X_train, y_train)
         model = train_model(X_train, y_train, n_estimators)
         save_model(model, model_name)
-
+        print("Model trained and saved successfully!")
     except Exception as e:
         logging.error(f"an error occurred: {e}")
         raise

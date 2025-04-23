@@ -71,21 +71,21 @@ def evaluation_model(model, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
         raise
 
 
-def save_metrics(metrics_dict: dict, filepath: str) -> None:
+def save_metrics(metrics_dict: dict, metrics_path: str) -> None:
     try:
-        logging.info(f"saving metrics to {filepath}")
-        with open("metrics.json", "w") as file:
+        logging.info(f"saving metrics to {metrics_path}")
+        with open(metrics_path, "w") as file:
             json.dump(metrics_dict, file, indent=4)
     except Exception as e:
-        logging.error(f"error saving metrics to {filepath}: {e}")
+        logging.error(f"error saving metrics to {metrics_path}: {e}")
         raise
 
 
 def main():
     try:
         test_datapath = "./data/processed/test_processed.csv"
-        model_path = "model.pkl"
-        metrics_path = "metrics.json"
+        model_path = "models/model.pkl"
+        metrics_path = "reports/metrics.json"
 
         test_data = load_data(test_datapath)
         X_test, y_test = prepare_data(test_data)
